@@ -54,3 +54,21 @@ import os
 ffmpeg_path = r"c:\Users\tejas\Desktop\ml\project\New folder\speech_recognition\ffmpeg-8.0-essentials_build\ffmpeg-8.0-essentials_build\bin"
 os.environ['PATH'] += ';' + ffmpeg_path
 
+import warnings
+import whisper
+
+warnings.filterwarnings("ignore", message="FP16 is not supported on CPU; using FP32 instead")
+
+model = whisper.load_model("base")
+
+audio_file = os.path.join(os.path.dirname(__file__), "output.wav")
+result = model.transcribe(audio_file)
+
+print(result["text"])
+
+
+
+import pyttsx3
+engine = pyttsx3.init()
+engine.say(result["text"])
+engine.runAndWait()
